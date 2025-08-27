@@ -15,7 +15,7 @@ export default class Main extends React.Component {
 
     searchMovies = (word, filter) => {
         const value = filter === "all" ? null : filter;
-        const url = `http://www.omdbapi.com/?apikey=${API_KEY}&s=${word}${filter ? `&type=${value}` : ''}`;
+        const url = `https://www.omdbapi.com/?apikey=${API_KEY}&s=${word}${filter ? `&type=${value}` : ''}`;
 
         fetch(url)
             .then((response) => response.json())
@@ -25,7 +25,7 @@ export default class Main extends React.Component {
 
     
     componentDidMount() {
-        fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=avengers`)
+        fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=avengers`)
             .then((response) => response.json())
             .then((data) => this.setState({ movies: data.Search }));
     }
