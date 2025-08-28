@@ -1,43 +1,37 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Movies from '../components/Movies'
 import Preloader from '../components/Preloader';
 import Search from '../components/Search';
 
 const API_KEY = process.env.REACT_APP_API_KEY
 
-export default class Main extends React.Component {
-    constructor(){
-        super()
-        this.state = {
-            movies: [],
-        }
-    }
+function Main () {
 
-    searchMovies = (word, filter) => {
+    const [movies, setMovies] = useState([]);
+
+    const searchMovies = (word, filter) => {
         const value = filter === "all" ? null : filter;
         const url = `https://www.omdbapi.com/?apikey=${API_KEY}&s=${word}${filter ? `&type=${value}` : ''}`;
 
         fetch(url)
             .then((response) => response.json())
-            .then((data) => this.setState({ movies: data.Search || [] }));
+            .then((data) => setMovies(data.Search || []));
     };
 
-
-    
-    componentDidMount() {
+    useEffect(() => {
         fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=avengers`)
             .then((response) => response.json())
-            .then((data) => this.setState({ movies: data.Search }));
-    }
+            .then((data) => setMovies(data.Search));
+    }, [])
 
-    render() {
-        return <main className="container content">
-            <Search searchMovies={this.searchMovies}/>
-            {this.state.movies.length ? 
-                (<Movies movies={this.state.movies}/>)
+    return <main className="container content">
+            <Search searchMovies={searchMovies}/>
+            {movies.length ? 
+                (<Movies movies={movies}/>)
                 : 
                 (<Preloader />)
             }
         </main>;
-  }
 }
+
+export default Main;

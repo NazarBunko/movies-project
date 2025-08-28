@@ -11,13 +11,14 @@ function Movie(props) {
 
   return <div id={id} className="card movie">
     <div className="card-image waves-effect waves-block waves-light">
-        {
-            poster === 'N/A' 
-            ? 
-            <img className='activator' alt='Img' src={`https://placehold.co/300x450?text=${title}`}></img>
-            :
-            <img className="activator" src={poster} alt='Img'/>
-        }
+      <img
+        className="activator"
+        src={poster !== 'N/A' ? poster : `https://placehold.co/300x450?text=${title}`}
+        alt={title}
+        onError={(e) => {
+          e.target.src = `https://placehold.co/300x450?text=${title}`;
+        }}
+      />
     </div>
     <div className="card-content">
       <span className="card-title activator grey-text text-darken-4">{title}</span>

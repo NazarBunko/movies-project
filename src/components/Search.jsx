@@ -1,91 +1,100 @@
-import React from "react";
+import React, {useState} from "react";
 
-class Search extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            search: "",
-            type: "all",
-        };
-    }
+function Search(props) {
+    const {
+        searchMovies = Function.prototype
+    } = props;
 
-    handleKeyDown = (e) => {
+    const [search, setSearch] = useState("");
+    const [type, setType] = useState("all");
+
+    const handleKeyDown = (e) => {
         if (e.key === "Enter") {
-            this.props.searchMovies(this.state.search, this.state.type);
+            searchMovies(search, type);
         }
     };
 
-    handleFilter = (e) => {
-        this.setState({ type: e.target.value });
+    const handleFilter = (e) => {
+        setType(e.target.value);
     };
 
-    render() {
-        return (
-            <div className="row">
-                <div className="input-field">
-                    <input
-                        className="validate"
-                        placeholder="Search"
-                        type="search"
-                        value={this.state.search}
-                        onChange={(e) =>
-                            this.setState({ search: e.target.value })
-                        }
-                        onKeyDown={this.handleKeyDown}
-                    />
-                    <button
-                        className="btn red lighten-2 button-search"
-                        onClick={() =>
-                            this.props.searchMovies(
-                                this.state.search,
-                                this.state.type
-                            )
-                        }
-                    >
-                        Search
-                    </button>
+    return (
+        <div className="row">
+            <div className="input-field">
+                <input
+                    className="validate"
+                    placeholder="Search"
+                    type="search"
+                    value={search}
+                    onChange={(e) =>
+                        setSearch(e.target.value)
+                    }
+                    onKeyDown={handleKeyDown}
+                />
+                <button
+                    className="btn red lighten-2 button-search"
+                    onClick={() =>
+                        searchMovies(
+                            search,
+                            type
+                        )
+                    }
+                >
+                    Search
+                </button>
 
-                    <div className="filters">
-                        <label>
-                            <input
-                                className="with-gap"
-                                name="type"
-                                type="radio"
-                                value="all"
-                                checked={this.state.type === "all"}
-                                onChange={this.handleFilter}
-                            />
-                            <span>All</span>
-                        </label>
+                <div className="filters">
+                    <label>
+                        <input
+                            className="with-gap"
+                            name="type"
+                            type="radio"
+                            value="all"
+                            checked={type === "all"}
+                            onChange={handleFilter}
+                        />
+                        <span>All</span>
+                    </label>
 
-                        <label>
-                            <input
-                                className="with-gap"
-                                name="type"
-                                type="radio"
-                                value="movie"
-                                checked={this.state.type === "movie"}
-                                onChange={this.handleFilter}
-                            />
-                            <span>Movies</span>
-                        </label>
+                    <label>
+                        <input
+                            className="with-gap"
+                            name="type"
+                            type="radio"
+                            value="movie"
+                            checked={type === "movie"}
+                            onChange={handleFilter}
+                        />
+                        <span>Movies</span>
+                    </label>
 
-                        <label>
-                            <input
-                                className="with-gap"
-                                name="type"
-                                type="radio"
-                                value="series"
-                                checked={this.state.type === "series"}
-                                onChange={this.handleFilter}
-                            />
-                            <span>Series</span>
-                        </label>
-                    </div>
+                    <label>
+                        <input
+                            className="with-gap"
+                            name="type"
+                            type="radio"
+                            value="series"
+                            checked={type === "series"}
+                            onChange={handleFilter}
+                        />
+                        <span>Series</span>
+                    </label>
+
+                    <label>
+                        <input
+                            className="with-gap"
+                            name="type"
+                            type="radio"
+                            value="game"
+                            checked={type === "game"}
+                            onChange={handleFilter}
+                        />
+                        <span>Games</span>
+                    </label>
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default Search;
