@@ -30,7 +30,9 @@ function Search(props) {
                         setSearch(e.target.value)
                     }
                     onKeyDown={handleKeyDown}
-                />
+                >
+                </input>
+                
                 <button
                     className="btn red lighten-2 button-search"
                     onClick={() =>
